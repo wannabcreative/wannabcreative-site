@@ -90,10 +90,17 @@ Two main entities defined in Drizzle schema:
 - Files served statically via Express middleware
 - Production deployment needs persistent file storage solution
 
-## Recent Changes (2024-07-29)
+## Recent Changes (2025-07-29)
 - **Multilingual Support**: Added comprehensive i18n system supporting 5 languages (Korean, English, Chinese, Japanese, Spanish)
   - Language context provider with browser auto-detection
   - Language selector dropdown in header
   - Localized UI text and palm reading analysis results
   - Language preference persistence in localStorage
   - Server-side multilingual palm reading content
+
+- **UI/UX Improvements**: Enhanced text readability and visual design
+  - Fixed FormData upload handling for proper file transmission
+  - Changed all analysis result text to black color for better readability
+  - Removed white/pastel backgrounds that hindered text visibility
+  - Applied consistent black text styling across all fortune sections
+  - Maintained mystical dark theme while ensuring text accessibility
