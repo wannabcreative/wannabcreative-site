@@ -178,7 +178,7 @@ export default function PalmReader() {
                         style={{ width: `${results.loveScore}%` }}
                       ></div>
                     </div>
-                    <p className="text-white text-base leading-relaxed">
+                    <p className="text-black text-base leading-relaxed bg-white/80 p-3 rounded-lg">
                       {results.loveReading}
                     </p>
                   </div>
@@ -205,7 +205,7 @@ export default function PalmReader() {
                         style={{ width: `${results.moneyScore}%` }}
                       ></div>
                     </div>
-                    <p className="text-white text-base leading-relaxed">
+                    <p className="text-black text-base leading-relaxed bg-white/80 p-3 rounded-lg">
                       {results.moneyReading}
                     </p>
                   </div>
@@ -232,7 +232,7 @@ export default function PalmReader() {
                         style={{ width: `${results.healthScore}%` }}
                       ></div>
                     </div>
-                    <p className="text-white text-base leading-relaxed">
+                    <p className="text-black text-base leading-relaxed bg-white/80 p-3 rounded-lg">
                       {results.healthReading}
                     </p>
                   </div>
@@ -253,7 +253,7 @@ export default function PalmReader() {
                     {Array.isArray(results.features) && results.features.map((feature, index) => (
                       <li key={index} className="flex items-start">
                         <ChevronRight className="text-mystic-gold mt-1 mr-3 text-sm flex-shrink-0" />
-                        <span className="text-white text-base leading-relaxed">{feature}</span>
+                        <span className="text-black text-base leading-relaxed bg-white/80 px-2 py-1 rounded">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -267,7 +267,7 @@ export default function PalmReader() {
                     {Array.isArray(results.advice) && results.advice.map((advice, index) => (
                       <li key={index} className="flex items-start">
                         <ChevronRight className="text-mystic-emerald mt-1 mr-3 text-sm flex-shrink-0" />
-                        <span className="text-white text-base leading-relaxed">{advice}</span>
+                        <span className="text-black text-base leading-relaxed bg-white/80 px-2 py-1 rounded">{advice}</span>
                       </li>
                     ))}
                   </ul>
