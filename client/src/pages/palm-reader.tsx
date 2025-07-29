@@ -3,8 +3,10 @@ import { useMutation } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/ui/file-upload";
+import { LanguageSelector } from "@/components/ui/language-selector";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguageContext } from "@/lib/i18n";
 import { 
   Hand, 
   Heart, 
@@ -21,11 +23,13 @@ export default function PalmReader() {
   const [currentStep, setCurrentStep] = useState<'upload' | 'loading' | 'results'>('upload');
   const [results, setResults] = useState<PalmReading | null>(null);
   const { toast } = useToast();
+  const { t, language } = useLanguageContext();
 
   const analyzePalmMutation = useMutation({
     mutationFn: async (file: File) => {
       const formData = new FormData();
       formData.append('palmImage', file);
+      formData.append('language', language);
       
       const response = await apiRequest('POST', '/api/palm-reading', formData);
       return response.json();
@@ -34,15 +38,15 @@ export default function PalmReader() {
       setResults(data);
       setCurrentStep('results');
       toast({
-        title: "분석 완료!",
-        description: "손금 분석이 성공적으로 완료되었습니다.",
+        title: t.analysisComplete,
+        description: t.analysisCompleteDesc,
       });
     },
     onError: (error) => {
       console.error('Analysis failed:', error);
       toast({
-        title: "분석 실패",
-        description: "손금 분석 중 오류가 발생했습니다. 다시 시도해주세요.",
+        title: t.analysisFailed,
+        description: t.analysisFailedDesc,
         variant: "destructive",
       });
       setCurrentStep('upload');
@@ -70,15 +74,18 @@ export default function PalmReader() {
               <Hand className="text-slate-900 text-lg" />
             </div>
             <h1 className="text-2xl font-bold bg-gradient-to-r from-mystic-gold to-amber-300 bg-clip-text text-transparent">
-              Palm Reader
+              {t.appName}
             </h1>
           </div>
-          <Button 
-            variant="outline" 
-            className="hidden md:block bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20"
-          >
-            무료 체험
-          </Button>
+          <div className="flex items-center space-x-3">
+            <LanguageSelector />
+            <Button 
+              variant="outline" 
+              className="hidden md:block bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20"
+            >
+              {t.freeTrial}
+            </Button>
+          </div>
         </nav>
       </header>
 
@@ -90,14 +97,13 @@ export default function PalmReader() {
               <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-amber-500/20 blur-3xl rounded-full"></div>
               <h2 className="relative text-5xl md:text-6xl font-bold mb-6 leading-tight">
                 <span className="bg-gradient-to-r from-white via-mystic-gold to-mystic-violet bg-clip-text text-transparent">
-                  손금으로 알아보는
+                  {t.heroTitle}
                 </span>
                 <br />
-                <span className="font-serif text-mystic-gold">당신의 운명</span>
+                <span className="font-serif text-mystic-gold">{t.heroSubtitle}</span>
               </h2>
               <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-                AI 기술로 분석하는 정확한 손금 해석. 사진 한 장으로 
-                <span className="text-mystic-gold font-semibold"> 사랑, 재물, 건강</span>의 운세를 확인하세요.
+                {t.heroDescription}
               </p>
             </div>
 
@@ -120,22 +126,22 @@ export default function PalmReader() {
                     <Hand className="text-2xl text-mystic-gold" />
                   </div>
                 </div>
-                <h3 className="text-2xl font-semibold text-mystic-gold mb-4">손금 분석 중...</h3>
-                <p className="text-gray-300 text-lg mb-6">AI가 당신의 손금을 정밀 분석하고 있습니다</p>
+                <h3 className="text-2xl font-semibold text-mystic-gold mb-4">{t.analyzing}</h3>
+                <p className="text-gray-300 text-lg mb-6">{t.analyzingDescription}</p>
               </div>
               
               <div className="space-y-4">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-300">이미지 처리</span>
-                  <span className="text-mystic-emerald">완료</span>
+                  <span className="text-gray-300">{t.imageProcessing}</span>
+                  <span className="text-mystic-emerald">{t.completed}</span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-300">손금 라인 감지</span>
-                  <span className="text-mystic-gold">진행 중...</span>
+                  <span className="text-gray-300">{t.lineDetection}</span>
+                  <span className="text-mystic-gold">{t.inProgress}</span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-300">운세 해석</span>
-                  <span className="text-gray-500">대기 중</span>
+                  <span className="text-gray-300">{t.fortuneInterpretation}</span>
+                  <span className="text-gray-500">{t.waiting}</span>
                 </div>
               </div>
             </Card>
@@ -146,8 +152,8 @@ export default function PalmReader() {
         {currentStep === 'results' && results && (
           <div className="py-12 max-w-6xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold mb-4 text-mystic-gold">손금 분석 결과</h2>
-              <p className="text-gray-300 text-lg">AI가 분석한 당신의 손금 운세입니다</p>
+              <h2 className="text-4xl font-bold mb-4 text-mystic-gold">{t.resultsTitle}</h2>
+              <p className="text-gray-300 text-lg">{t.resultsDescription}</p>
             </div>
 
             {/* Analysis Cards */}
@@ -159,11 +165,11 @@ export default function PalmReader() {
                     <div className="w-16 h-16 bg-gradient-to-r from-pink-400 to-red-400 rounded-full flex items-center justify-center mx-auto mb-3">
                       <Heart className="text-2xl text-white" />
                     </div>
-                    <h3 className="text-xl font-semibold text-pink-300">감정선 (사랑)</h3>
+                    <h3 className="text-xl font-semibold text-pink-300">{t.loveTitle}</h3>
                   </div>
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-gray-300">운세 점수</span>
+                      <span className="text-gray-300">{t.fortuneScore}</span>
                       <span className="text-pink-300 font-semibold">{results.loveScore}/100</span>
                     </div>
                     <div className="w-full bg-gray-700 rounded-full h-2">

@@ -3,6 +3,7 @@ import { Button } from "./button";
 import { Card } from "./card";
 import { Camera, Upload, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLanguageContext } from "@/lib/i18n";
 
 interface FileUploadProps {
   onFileSelect: (file: File) => void;
@@ -48,14 +49,16 @@ export function FileUpload({
     }
   };
 
+  const { t } = useLanguageContext();
+
   const handleFile = (file: File) => {
     if (!file.type.startsWith('image/')) {
-      alert('이미지 파일만 업로드 가능합니다.');
+      alert(t.imageOnly);
       return;
     }
 
     if (file.size > maxSize) {
-      alert('파일 크기가 너무 큽니다. 5MB 이하의 파일을 선택해주세요.');
+      alert(t.fileTooLarge);
       return;
     }
 
@@ -103,13 +106,13 @@ export function FileUpload({
           </div>
           
           <h3 className="text-2xl font-semibold mb-3 text-mystic-gold">
-            {selectedFile ? "업로드 완료" : "손바닥 사진 업로드"}
+            {selectedFile ? t.uploadComplete : t.uploadTitle}
           </h3>
           
           <p className="text-gray-300 mb-6">
             {selectedFile 
               ? `${selectedFile.name} (${(selectedFile.size / 1024 / 1024).toFixed(1)}MB)`
-              : "손바닥을 펼쳐서 선명하게 촬영해주세요"
+              : t.uploadDescription
             }
           </p>
         </div>
@@ -119,35 +122,35 @@ export function FileUpload({
           type="button"
         >
           <Upload className="w-5 h-5" />
-          <span>{selectedFile ? "다른 사진 선택" : "사진 선택하기"}</span>
+          <span>{selectedFile ? t.selectAnotherPhoto : t.selectPhoto}</span>
         </Button>
         
         <div className="text-sm text-gray-400">
-          또는 여기에 파일을 드래그하세요
+          {t.dragHere}
         </div>
       </div>
 
       <div className="mt-6 text-left">
         <h4 className="font-semibold text-mystic-gold mb-3 flex items-center">
           <span className="w-4 h-4 bg-mystic-gold rounded-full mr-2"></span>
-          촬영 가이드
+          {t.guideTitle}
         </h4>
         <ul className="space-y-2 text-sm text-gray-300">
           <li className="flex items-center">
             <Check className="w-4 h-4 text-mystic-emerald mr-2" />
-            손바닥을 펼쳐서 촬영
+            {t.guidePalm}
           </li>
           <li className="flex items-center">
             <Check className="w-4 h-4 text-mystic-emerald mr-2" />
-            충분한 조명 확보
+            {t.guideLighting}
           </li>
           <li className="flex items-center">
             <Check className="w-4 h-4 text-mystic-emerald mr-2" />
-            손금이 선명하게 보이도록
+            {t.guideClarity}
           </li>
           <li className="flex items-center">
             <Check className="w-4 h-4 text-mystic-emerald mr-2" />
-            흔들림 없이 안정적으로
+            {t.guideStability}
           </li>
         </ul>
       </div>

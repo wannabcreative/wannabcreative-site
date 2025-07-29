@@ -89,3 +89,11 @@ Two main entities defined in Drizzle schema:
 - Uploads stored locally in `uploads/` directory
 - Files served statically via Express middleware
 - Production deployment needs persistent file storage solution
+
+## Recent Changes (2024-07-29)
+- **Multilingual Support**: Added comprehensive i18n system supporting 5 languages (Korean, English, Chinese, Japanese, Spanish)
+  - Language context provider with browser auto-detection
+  - Language selector dropdown in header
+  - Localized UI text and palm reading analysis results
+  - Language preference persistence in localStorage
+  - Server-side multilingual palm reading content
