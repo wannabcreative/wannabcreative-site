@@ -165,12 +165,12 @@ export default function PalmReader() {
                     <div className="w-16 h-16 bg-gradient-to-r from-pink-400 to-red-400 rounded-full flex items-center justify-center mx-auto mb-3">
                       <Heart className="text-2xl text-white" />
                     </div>
-                    <h3 className="text-xl font-semibold text-pink-300">{t.loveTitle}</h3>
+                    <h3 className="text-xl font-semibold text-black bg-white/80 px-3 py-1 rounded">{t.loveTitle}</h3>
                   </div>
                   <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <span className="text-white font-medium">{t.fortuneScore}</span>
-                      <span className="text-pink-200 font-bold text-lg">{results.loveScore}/100</span>
+                    <div className="flex justify-between bg-white/80 p-2 rounded">
+                      <span className="text-black font-medium">{t.fortuneScore}</span>
+                      <span className="text-black font-bold text-lg">{results.loveScore}/100</span>
                     </div>
                     <div className="w-full bg-gray-700 rounded-full h-2">
                       <div 
@@ -192,12 +192,12 @@ export default function PalmReader() {
                     <div className="w-16 h-16 mystic-gold-gradient rounded-full flex items-center justify-center mx-auto mb-3">
                       <Coins className="text-2xl text-slate-900" />
                     </div>
-                    <h3 className="text-xl font-semibold text-yellow-300">{t.moneyTitle}</h3>
+                    <h3 className="text-xl font-semibold text-black bg-white/80 px-3 py-1 rounded">{t.moneyTitle}</h3>
                   </div>
                   <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <span className="text-white font-medium">{t.fortuneScore}</span>
-                      <span className="text-yellow-200 font-bold text-lg">{results.moneyScore}/100</span>
+                    <div className="flex justify-between bg-white/80 p-2 rounded">
+                      <span className="text-black font-medium">{t.fortuneScore}</span>
+                      <span className="text-black font-bold text-lg">{results.moneyScore}/100</span>
                     </div>
                     <div className="w-full bg-gray-700 rounded-full h-2">
                       <div 
@@ -219,12 +219,12 @@ export default function PalmReader() {
                     <div className="w-16 h-16 bg-gradient-to-r from-emerald-400 to-green-400 rounded-full flex items-center justify-center mx-auto mb-3">
                       <Activity className="text-2xl text-white" />
                     </div>
-                    <h3 className="text-xl font-semibold text-green-300">{t.healthTitle}</h3>
+                    <h3 className="text-xl font-semibold text-black bg-white/80 px-3 py-1 rounded">{t.healthTitle}</h3>
                   </div>
                   <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <span className="text-white font-medium">{t.fortuneScore}</span>
-                      <span className="text-green-200 font-bold text-lg">{results.healthScore}/100</span>
+                    <div className="flex justify-between bg-white/80 p-2 rounded">
+                      <span className="text-black font-medium">{t.fortuneScore}</span>
+                      <span className="text-black font-bold text-lg">{results.healthScore}/100</span>
                     </div>
                     <div className="w-full bg-gray-700 rounded-full h-2">
                       <div 
