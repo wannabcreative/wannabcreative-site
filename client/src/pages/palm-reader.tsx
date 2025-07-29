@@ -169,8 +169,8 @@ export default function PalmReader() {
                   </div>
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-gray-300">{t.fortuneScore}</span>
-                      <span className="text-pink-300 font-semibold">{results.loveScore}/100</span>
+                      <span className="text-white font-medium">{t.fortuneScore}</span>
+                      <span className="text-pink-200 font-bold text-lg">{results.loveScore}/100</span>
                     </div>
                     <div className="w-full bg-gray-700 rounded-full h-2">
                       <div 
@@ -178,7 +178,7 @@ export default function PalmReader() {
                         style={{ width: `${results.loveScore}%` }}
                       ></div>
                     </div>
-                    <p className="text-sm text-gray-300 leading-relaxed">
+                    <p className="text-white text-base leading-relaxed">
                       {results.loveReading}
                     </p>
                   </div>
@@ -192,12 +192,12 @@ export default function PalmReader() {
                     <div className="w-16 h-16 mystic-gold-gradient rounded-full flex items-center justify-center mx-auto mb-3">
                       <Coins className="text-2xl text-slate-900" />
                     </div>
-                    <h3 className="text-xl font-semibold text-yellow-300">재물선 (재운)</h3>
+                    <h3 className="text-xl font-semibold text-yellow-300">{t.moneyTitle}</h3>
                   </div>
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-gray-300">운세 점수</span>
-                      <span className="text-yellow-300 font-semibold">{results.moneyScore}/100</span>
+                      <span className="text-white font-medium">{t.fortuneScore}</span>
+                      <span className="text-yellow-200 font-bold text-lg">{results.moneyScore}/100</span>
                     </div>
                     <div className="w-full bg-gray-700 rounded-full h-2">
                       <div 
@@ -205,7 +205,7 @@ export default function PalmReader() {
                         style={{ width: `${results.moneyScore}%` }}
                       ></div>
                     </div>
-                    <p className="text-sm text-gray-300 leading-relaxed">
+                    <p className="text-white text-base leading-relaxed">
                       {results.moneyReading}
                     </p>
                   </div>
@@ -219,12 +219,12 @@ export default function PalmReader() {
                     <div className="w-16 h-16 bg-gradient-to-r from-emerald-400 to-green-400 rounded-full flex items-center justify-center mx-auto mb-3">
                       <Activity className="text-2xl text-white" />
                     </div>
-                    <h3 className="text-xl font-semibold text-green-300">생명선 (건강)</h3>
+                    <h3 className="text-xl font-semibold text-green-300">{t.healthTitle}</h3>
                   </div>
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-gray-300">운세 점수</span>
-                      <span className="text-green-300 font-semibold">{results.healthScore}/100</span>
+                      <span className="text-white font-medium">{t.fortuneScore}</span>
+                      <span className="text-green-200 font-bold text-lg">{results.healthScore}/100</span>
                     </div>
                     <div className="w-full bg-gray-700 rounded-full h-2">
                       <div 
@@ -232,7 +232,7 @@ export default function PalmReader() {
                         style={{ width: `${results.healthScore}%` }}
                       ></div>
                     </div>
-                    <p className="text-sm text-gray-300 leading-relaxed">
+                    <p className="text-white text-base leading-relaxed">
                       {results.healthReading}
                     </p>
                   </div>
@@ -242,18 +242,18 @@ export default function PalmReader() {
 
             {/* Detailed Analysis */}
             <Card className="bg-white/5 backdrop-blur-sm border-white/10 p-8">
-              <h3 className="text-2xl font-semibold text-mystic-gold mb-6 text-center">상세 분석 결과</h3>
+              <h3 className="text-2xl font-semibold text-mystic-gold mb-6 text-center">{t.detailedAnalysis}</h3>
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
                   <h4 className="text-lg font-semibold text-mystic-violet mb-4 flex items-center">
                     <Star className="mr-2" />
-                    주요 특징
+                    {t.mainFeatures}
                   </h4>
-                  <ul className="space-y-3 text-gray-300">
+                  <ul className="space-y-3">
                     {Array.isArray(results.features) && results.features.map((feature, index) => (
                       <li key={index} className="flex items-start">
                         <ChevronRight className="text-mystic-gold mt-1 mr-3 text-sm flex-shrink-0" />
-                        <span>{feature}</span>
+                        <span className="text-white text-base leading-relaxed">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -261,13 +261,13 @@ export default function PalmReader() {
                 <div>
                   <h4 className="text-lg font-semibold text-mystic-violet mb-4 flex items-center">
                     <Lightbulb className="mr-2" />
-                    조언
+                    {t.advice}
                   </h4>
-                  <ul className="space-y-3 text-gray-300">
+                  <ul className="space-y-3">
                     {Array.isArray(results.advice) && results.advice.map((advice, index) => (
                       <li key={index} className="flex items-start">
                         <ChevronRight className="text-mystic-emerald mt-1 mr-3 text-sm flex-shrink-0" />
-                        <span>{advice}</span>
+                        <span className="text-white text-base leading-relaxed">{advice}</span>
                       </li>
                     ))}
                   </ul>
