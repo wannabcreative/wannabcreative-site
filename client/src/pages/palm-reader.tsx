@@ -165,10 +165,10 @@ export default function PalmReader() {
                     <div className="w-16 h-16 bg-gradient-to-r from-pink-400 to-red-400 rounded-full flex items-center justify-center mx-auto mb-3">
                       <Heart className="text-2xl text-white" />
                     </div>
-                    <h3 className="text-xl font-semibold text-black bg-white/80 px-3 py-1 rounded">{t.loveTitle}</h3>
+                    <h3 className="text-xl font-semibold text-black">{t.loveTitle}</h3>
                   </div>
                   <div className="space-y-3">
-                    <div className="flex justify-between bg-white/80 p-2 rounded">
+                    <div className="flex justify-between">
                       <span className="text-black font-medium">{t.fortuneScore}</span>
                       <span className="text-black font-bold text-lg">{results.loveScore}/100</span>
                     </div>
@@ -178,7 +178,7 @@ export default function PalmReader() {
                         style={{ width: `${results.loveScore}%` }}
                       ></div>
                     </div>
-                    <p className="text-black text-base leading-relaxed bg-white/80 p-3 rounded-lg">
+                    <p className="text-black text-base leading-relaxed">
                       {results.loveReading}
                     </p>
                   </div>
@@ -192,10 +192,10 @@ export default function PalmReader() {
                     <div className="w-16 h-16 mystic-gold-gradient rounded-full flex items-center justify-center mx-auto mb-3">
                       <Coins className="text-2xl text-slate-900" />
                     </div>
-                    <h3 className="text-xl font-semibold text-black bg-white/80 px-3 py-1 rounded">{t.moneyTitle}</h3>
+                    <h3 className="text-xl font-semibold text-black">{t.moneyTitle}</h3>
                   </div>
                   <div className="space-y-3">
-                    <div className="flex justify-between bg-white/80 p-2 rounded">
+                    <div className="flex justify-between">
                       <span className="text-black font-medium">{t.fortuneScore}</span>
                       <span className="text-black font-bold text-lg">{results.moneyScore}/100</span>
                     </div>
@@ -205,7 +205,7 @@ export default function PalmReader() {
                         style={{ width: `${results.moneyScore}%` }}
                       ></div>
                     </div>
-                    <p className="text-black text-base leading-relaxed bg-white/80 p-3 rounded-lg">
+                    <p className="text-black text-base leading-relaxed">
                       {results.moneyReading}
                     </p>
                   </div>
@@ -219,10 +219,10 @@ export default function PalmReader() {
                     <div className="w-16 h-16 bg-gradient-to-r from-emerald-400 to-green-400 rounded-full flex items-center justify-center mx-auto mb-3">
                       <Activity className="text-2xl text-white" />
                     </div>
-                    <h3 className="text-xl font-semibold text-black bg-white/80 px-3 py-1 rounded">{t.healthTitle}</h3>
+                    <h3 className="text-xl font-semibold text-black">{t.healthTitle}</h3>
                   </div>
                   <div className="space-y-3">
-                    <div className="flex justify-between bg-white/80 p-2 rounded">
+                    <div className="flex justify-between">
                       <span className="text-black font-medium">{t.fortuneScore}</span>
                       <span className="text-black font-bold text-lg">{results.healthScore}/100</span>
                     </div>
@@ -232,7 +232,7 @@ export default function PalmReader() {
                         style={{ width: `${results.healthScore}%` }}
                       ></div>
                     </div>
-                    <p className="text-black text-base leading-relaxed bg-white/80 p-3 rounded-lg">
+                    <p className="text-black text-base leading-relaxed">
                       {results.healthReading}
                     </p>
                   </div>
@@ -253,7 +253,7 @@ export default function PalmReader() {
                     {Array.isArray(results.features) && results.features.map((feature, index) => (
                       <li key={index} className="flex items-start">
                         <ChevronRight className="text-mystic-gold mt-1 mr-3 text-sm flex-shrink-0" />
-                        <span className="text-black text-base leading-relaxed bg-white/80 px-2 py-1 rounded">{feature}</span>
+                        <span className="text-black text-base leading-relaxed">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -267,7 +267,7 @@ export default function PalmReader() {
                     {Array.isArray(results.advice) && results.advice.map((advice, index) => (
                       <li key={index} className="flex items-start">
                         <ChevronRight className="text-mystic-emerald mt-1 mr-3 text-sm flex-shrink-0" />
-                        <span className="text-black text-base leading-relaxed bg-white/80 px-2 py-1 rounded">{advice}</span>
+                        <span className="text-black text-base leading-relaxed">{advice}</span>
                       </li>
                     ))}
                   </ul>
