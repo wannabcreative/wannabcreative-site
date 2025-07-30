@@ -37,14 +37,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: 'No image file provided' });
       }
 
-      // Get language from request body or default to 'ko'
+      // Get language and birth date from request body
       const language = req.body.language || 'ko';
+      const birthDate = req.body.birthDate;
 
       // Mock palm reading analysis with language support
-      const analysisResult = await analyzePalmImage(req.file.path, language);
+      const analysisResult = await analyzePalmImage(req.file.path, language, birthDate);
       
       const palmReading = await storage.createPalmReading({
         imageUrl: `/uploads/${req.file.filename}`,
+        birthDate: birthDate,
         loveScore: analysisResult.loveScore,
         moneyScore: analysisResult.moneyScore,
         healthScore: analysisResult.healthScore,
@@ -81,7 +83,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 }
 
 // Mock palm analysis function with multilingual support
-async function analyzePalmImage(imagePath: string, language: string = 'ko') {
+async function analyzePalmImage(imagePath: string, language: string = 'ko', birthDate?: string) {
   // Simulate processing time
   await new Promise(resolve => setTimeout(resolve, 2000));
 

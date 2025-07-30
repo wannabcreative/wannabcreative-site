@@ -12,6 +12,7 @@ export const users = pgTable("users", {
 export const palmReadings = pgTable("palm_readings", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   imageUrl: text("image_url").notNull(),
+  birthDate: text("birth_date"),
   loveScore: integer("love_score").notNull(),
   moneyScore: integer("money_score").notNull(),
   healthScore: integer("health_score").notNull(),

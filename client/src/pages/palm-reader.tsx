@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { FileUpload } from "@/components/ui/file-upload";
 import { LanguageSelector } from "@/components/ui/language-selector";
 import { apiRequest } from "@/lib/queryClient";
@@ -15,12 +17,14 @@ import {
   Star, 
   Lightbulb, 
   ChevronRight,
-  RotateCcw
+  RotateCcw,
+  Calendar
 } from "lucide-react";
 import { type PalmReading } from "@shared/schema";
 
 export default function PalmReader() {
-  const [currentStep, setCurrentStep] = useState<'upload' | 'loading' | 'results'>('upload');
+  const [currentStep, setCurrentStep] = useState<'birthdate' | 'upload' | 'loading' | 'results'>('birthdate');
+  const [birthDate, setBirthDate] = useState('');
   const [results, setResults] = useState<PalmReading | null>(null);
   const { toast } = useToast();
   const { t, language } = useLanguageContext();
@@ -30,6 +34,7 @@ export default function PalmReader() {
       const formData = new FormData();
       formData.append('palmImage', file);
       formData.append('language', language);
+      formData.append('birthDate', birthDate);
       
       const response = await apiRequest('POST', '/api/palm-reading', formData);
       return response.json();
@@ -59,9 +64,22 @@ export default function PalmReader() {
   };
 
   const resetApp = () => {
-    setCurrentStep('upload');
+    setCurrentStep('birthdate');
+    setBirthDate('');
     setResults(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleBirthDateSubmit = () => {
+    if (!birthDate) {
+      toast({
+        title: "생일을 입력해주세요",
+        description: "정확한 운세 분석을 위해 생일 정보가 필요합니다.",
+        variant: "destructive",
+      });
+      return;
+    }
+    setCurrentStep('upload');
   };
 
   return (
@@ -90,6 +108,54 @@ export default function PalmReader() {
       </header>
 
       <main className="relative px-6">
+        {/* Birth Date Input Section */}
+        {currentStep === 'birthdate' && (
+          <div className="py-12 text-center max-w-2xl mx-auto">
+            <div className="mb-8 relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-amber-500/20 blur-3xl rounded-full"></div>
+              <h2 className="relative text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                <span className="bg-gradient-to-r from-white via-mystic-gold to-mystic-violet bg-clip-text text-transparent">
+                  생일을 알려주세요
+                </span>
+              </h2>
+              <p className="text-xl text-gray-300 max-w-lg mx-auto leading-relaxed">
+                정확한 운세 분석을 위해 생년월일이 필요합니다
+              </p>
+            </div>
+
+            <Card className="bg-white/5 backdrop-blur-sm border-white/10 p-8">
+              <div className="flex items-center justify-center mb-6">
+                <div className="w-16 h-16 mystic-gold-gradient rounded-full flex items-center justify-center">
+                  <Calendar className="text-2xl text-slate-900" />
+                </div>
+              </div>
+              
+              <div className="space-y-6">
+                <div>
+                  <Label htmlFor="birthDate" className="text-lg font-medium text-white mb-2 block">
+                    생년월일
+                  </Label>
+                  <Input
+                    id="birthDate"
+                    type="date"
+                    value={birthDate}
+                    onChange={(e) => setBirthDate(e.target.value)}
+                    className="bg-white/10 border-white/20 text-white placeholder-gray-400 text-lg"
+                    max={new Date().toISOString().split('T')[0]}
+                  />
+                </div>
+                
+                <Button 
+                  onClick={handleBirthDateSubmit}
+                  className="w-full mystic-gold-gradient text-slate-900 font-semibold py-3 text-lg hover:shadow-lg transition-all duration-300"
+                >
+                  다음 단계로
+                </Button>
+              </div>
+            </Card>
+          </div>
+        )}
+
         {/* Hero Section */}
         {currentStep === 'upload' && (
           <div className="py-12 text-center max-w-4xl mx-auto">

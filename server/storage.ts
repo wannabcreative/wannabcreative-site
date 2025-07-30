@@ -40,6 +40,7 @@ export class MemStorage implements IStorage {
     const reading: PalmReading = { 
       ...insertReading, 
       id, 
+      birthDate: insertReading.birthDate || null,
       createdAt: new Date() 
     };
     this.palmReadings.set(id, reading);
