@@ -253,7 +253,7 @@ export default function PalmReader() {
                     {Array.isArray(results.features) && results.features.map((feature, index) => (
                       <li key={index} className="flex items-start">
                         <ChevronRight className="text-mystic-gold mt-1 mr-3 text-sm flex-shrink-0" />
-                        <span className="text-black text-base leading-relaxed">{feature}</span>
+                        <span className="text-white text-base leading-relaxed">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -267,7 +267,7 @@ export default function PalmReader() {
                     {Array.isArray(results.advice) && results.advice.map((advice, index) => (
                       <li key={index} className="flex items-start">
                         <ChevronRight className="text-mystic-emerald mt-1 mr-3 text-sm flex-shrink-0" />
-                        <span className="text-black text-base leading-relaxed">{advice}</span>
+                        <span className="text-white text-base leading-relaxed">{advice}</span>
                       </li>
                     ))}
                   </ul>
