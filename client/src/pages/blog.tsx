@@ -19,7 +19,8 @@ import {
   Hand,
   Sparkles,
   Plus,
-  Edit
+  Edit,
+  Trash2
 } from "lucide-react";
 import { type BlogPost } from "@shared/schema";
 
@@ -66,6 +67,26 @@ export default function Blog() {
       toast({
         title: "작성 실패",
         description: "글 작성 중 오류가 발생했습니다. 다시 시도해주세요.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const deletePostMutation = useMutation({
+    mutationFn: async (postId: string) => {
+      return apiRequest('DELETE', `/api/blog-posts/${postId}`);
+    },
+    onSuccess: () => {
+      toast({
+        title: "글 삭제 완료",
+        description: "블로그 글이 성공적으로 삭제되었습니다.",
+      });
+      queryClient.invalidateQueries({ queryKey: ["/api/blog-posts"] });
+    },
+    onError: (error) => {
+      toast({
+        title: "삭제 실패",
+        description: "글 삭제 중 오류가 발생했습니다. 다시 시도해주세요.",
         variant: "destructive",
       });
     },
@@ -260,12 +281,24 @@ export default function Blog() {
                     <p className="text-gray-300 text-sm leading-relaxed mb-4">
                       {post.excerpt}
                     </p>
-                    <Link href={`/blog/${post.slug}`}>
-                      <Button variant="ghost" className="w-full justify-between text-mystic-gold hover:bg-mystic-gold/10 p-0">
-                        자세히 읽기
-                        <ArrowRight className="h-4 w-4" />
+                    <div className="flex gap-2">
+                      <Link href={`/blog/${post.slug}`} className="flex-1">
+                        <Button variant="ghost" className="w-full justify-between text-mystic-gold hover:bg-mystic-gold/10 p-0">
+                          자세히 읽기
+                          <ArrowRight className="h-4 w-4" />
+                        </Button>
+                      </Link>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => deletePostMutation.mutate(post.id)}
+                        disabled={deletePostMutation.isPending}
+                        className="text-red-400 hover:text-red-300 hover:bg-red-500/10 px-2"
+                        data-testid={`delete-post-${post.id}`}
+                      >
+                        <Trash2 className="h-4 w-4" />
                       </Button>
-                    </Link>
+                    </div>
                   </div>
                 </CardContent>
               </Card>

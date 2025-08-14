@@ -119,6 +119,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Delete blog post
+  app.delete('/api/blog-posts/:id', async (req, res) => {
+    try {
+      const success = await storage.deleteBlogPost(req.params.id);
+      if (!success) {
+        return res.status(404).json({ message: 'Blog post not found' });
+      }
+      res.status(200).json({ message: 'Blog post deleted successfully' });
+    } catch (error) {
+      console.error('Delete blog post error:', error);
+      res.status(500).json({ message: 'Failed to delete blog post' });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

@@ -88,6 +88,10 @@ export class MemStorage implements IStorage {
     return blogPost;
   }
 
+  async deleteBlogPost(id: string): Promise<boolean> {
+    return this.blogPosts.delete(id);
+  }
+
   private addSampleBlogPosts() {
     const samplePosts: BlogPost[] = [
       {
