@@ -313,9 +313,9 @@ async function analyzePalmImage(imagePath: string, language: string = 'ko', birt
           `오늘은 조심스럽게 행동하는 것이 좋겠습니다. ${zodiacSign}띠는 신중함이 행운을 가져다 줍니다.`
         ],
         newYear: [
-          `2024년 ${zodiacSign}띠는 큰 변화와 성장의 해가 될 것입니다. 새로운 도전을 두려워하지 마세요.`,
+          `${today.getFullYear()}년 ${zodiacSign}띠는 큰 변화와 성장의 해가 될 것입니다. 새로운 도전을 두려워하지 마세요.`,
           `올해는 ${zodiacSign}띠에게 재운이 특히 좋은 해입니다. 투자나 사업에 관심을 가져보세요.`,
-          `${zodiacSign}띠의 2024년은 인간관계에서 많은 발전이 있을 것입니다. 소중한 인연을 만나게 됩니다.`
+          `${zodiacSign}띠의 ${today.getFullYear()}년은 인간관계에서 많은 발전이 있을 것입니다. 소중한 인연을 만나게 됩니다.`
         ],
         mbti: [
           `당신의 손금을 보니 ENFP 성향이 강합니다. 창의적이고 열정적인 에너지가 느껴집니다.`,
@@ -331,9 +331,9 @@ async function analyzePalmImage(imagePath: string, language: string = 'ko', birt
           `It would be good to act carefully today. Caution brings luck to the ${zodiacSign} sign.`
         ],
         newYear: [
-          `2024 will be a year of great change and growth for the ${zodiacSign} sign. Don't fear new challenges.`,
+          `${today.getFullYear()} will be a year of great change and growth for the ${zodiacSign} sign. Don't fear new challenges.`,
           `This year brings especially good financial luck for the ${zodiacSign} sign. Consider investments or business opportunities.`,
-          `2024 will bring many developments in relationships for the ${zodiacSign} sign. You'll meet precious connections.`
+          `${today.getFullYear()} will bring many developments in relationships for the ${zodiacSign} sign. You'll meet precious connections.`
         ],
         mbti: [
           `Looking at your palm, I see strong ENFP tendencies. Creative and passionate energy is felt.`,

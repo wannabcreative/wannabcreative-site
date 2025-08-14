@@ -1,10 +1,15 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useLanguageContext } from "@/lib/i18n";
 import { 
   BookOpen, 
@@ -12,16 +17,58 @@ import {
   Calendar,
   ArrowRight,
   Hand,
-  Sparkles
+  Sparkles,
+  Plus,
+  Edit
 } from "lucide-react";
 import { type BlogPost } from "@shared/schema";
 
 export default function Blog() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [newPost, setNewPost] = useState({
+    title: '',
+    content: '',
+    excerpt: '',
+    category: 'palmistry'
+  });
+  const { toast } = useToast();
   const { t, language } = useLanguageContext();
 
   const { data: blogPosts, isLoading } = useQuery<BlogPost[]>({
     queryKey: ["/api/blog-posts"],
+  });
+
+  const createPostMutation = useMutation({
+    mutationFn: async (postData: typeof newPost) => {
+      const slug = postData.title
+        .toLowerCase()
+        .replace(/[^가-힣a-zA-Z0-9\s]/g, '')
+        .replace(/\s+/g, '-')
+        .trim();
+      
+      return apiRequest('POST', '/api/blog-posts', {
+        ...postData,
+        slug,
+        author: '익명'
+      });
+    },
+    onSuccess: () => {
+      toast({
+        title: "글 작성 완료",
+        description: "새로운 블로그 글이 성공적으로 작성되었습니다.",
+      });
+      queryClient.invalidateQueries({ queryKey: ["/api/blog-posts"] });
+      setIsCreateModalOpen(false);
+      setNewPost({ title: '', content: '', excerpt: '', category: 'palmistry' });
+    },
+    onError: (error) => {
+      toast({
+        title: "작성 실패",
+        description: "글 작성 중 오류가 발생했습니다. 다시 시도해주세요.",
+        variant: "destructive",
+      });
+    },
   });
 
   const filteredPosts = blogPosts?.filter(post => 
@@ -53,6 +100,80 @@ export default function Blog() {
             </Link>
           </div>
           <div className="flex items-center space-x-4">
+            <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
+              <DialogTrigger asChild>
+                <Button className="bg-mystic-gold hover:bg-mystic-gold/80 text-slate-900 font-semibold">
+                  <Plus className="w-4 h-4 mr-2" />
+                  글쓰기
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-slate-800 border-mystic-gold/30">
+                <DialogHeader>
+                  <DialogTitle className="text-mystic-gold text-xl">새 글 작성</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4 py-4">
+                  <div>
+                    <Label htmlFor="title" className="text-white">제목</Label>
+                    <Input
+                      id="title"
+                      value={newPost.title}
+                      onChange={(e) => setNewPost(prev => ({ ...prev, title: e.target.value }))}
+                      className="bg-slate-700 border-slate-600 text-white"
+                      placeholder="글 제목을 입력하세요"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="excerpt" className="text-white">요약</Label>
+                    <Input
+                      id="excerpt"
+                      value={newPost.excerpt}
+                      onChange={(e) => setNewPost(prev => ({ ...prev, excerpt: e.target.value }))}
+                      className="bg-slate-700 border-slate-600 text-white"
+                      placeholder="글 요약을 입력하세요"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="category" className="text-white">카테고리</Label>
+                    <select
+                      id="category"
+                      value={newPost.category}
+                      onChange={(e) => setNewPost(prev => ({ ...prev, category: e.target.value }))}
+                      className="w-full p-2 bg-slate-700 border border-slate-600 text-white rounded-md"
+                    >
+                      <option value="palmistry">손금 분석</option>
+                      <option value="fortune">사주풀이</option>
+                      <option value="tips">운세 팁</option>
+                    </select>
+                  </div>
+                  <div>
+                    <Label htmlFor="content" className="text-white">내용</Label>
+                    <Textarea
+                      id="content"
+                      value={newPost.content}
+                      onChange={(e) => setNewPost(prev => ({ ...prev, content: e.target.value }))}
+                      className="bg-slate-700 border-slate-600 text-white min-h-[200px]"
+                      placeholder="글 내용을 입력하세요"
+                    />
+                  </div>
+                  <div className="flex justify-end space-x-2 pt-4">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => setIsCreateModalOpen(false)}
+                      className="border-slate-600 text-slate-300 hover:bg-slate-700"
+                    >
+                      취소
+                    </Button>
+                    <Button 
+                      onClick={() => createPostMutation.mutate(newPost)}
+                      disabled={!newPost.title || !newPost.content || createPostMutation.isPending}
+                      className="bg-mystic-gold hover:bg-mystic-gold/80 text-slate-900 font-semibold"
+                    >
+                      {createPostMutation.isPending ? '작성 중...' : '발행'}
+                    </Button>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
             <Link href="/palmreader">
               <Button variant="outline" className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20">
                 손금보기
