@@ -6,11 +6,17 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { LanguageContext, useTranslation } from "@/lib/i18n";
 import NotFound from "@/pages/not-found";
 import PalmReader from "@/pages/palm-reader";
+import Home from "@/pages/home";
+import Blog from "@/pages/blog";
+import BlogPost from "@/pages/blog-post";
 
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={PalmReader} />
+      <Route path="/" component={Home} />
+      <Route path="/palmreader" component={PalmReader} />
+      <Route path="/blog" component={Blog} />
+      <Route path="/blog/:slug" component={BlogPost} />
       <Route component={NotFound} />
     </Switch>
   );

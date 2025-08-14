@@ -1,7 +1,7 @@
 import express, { type Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertPalmReadingSchema } from "@shared/schema";
+import { insertPalmReadingSchema, insertBlogPostSchema } from "@shared/schema";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
@@ -75,6 +75,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Get palm reading error:', error);
       res.status(500).json({ message: 'Failed to retrieve reading' });
+    }
+  });
+
+  // Blog post routes
+  // Get all blog posts
+  app.get('/api/blog-posts', async (req, res) => {
+    try {
+      const blogPosts = await storage.getBlogPosts();
+      res.json(blogPosts);
+    } catch (error) {
+      console.error('Get blog posts error:', error);
+      res.status(500).json({ message: 'Failed to retrieve blog posts' });
+    }
+  });
+
+  // Get blog post by slug
+  app.get('/api/blog-posts/:slug', async (req, res) => {
+    try {
+      const blogPost = await storage.getBlogPostBySlug(req.params.slug);
+      if (!blogPost) {
+        return res.status(404).json({ message: 'Blog post not found' });
+      }
+      res.json(blogPost);
+    } catch (error) {
+      console.error('Get blog post error:', error);
+      res.status(500).json({ message: 'Failed to retrieve blog post' });
+    }
+  });
+
+  // Create blog post (for admin use)
+  app.post('/api/blog-posts', express.json(), async (req, res) => {
+    try {
+      const validatedData = insertBlogPostSchema.parse(req.body);
+      const blogPost = await storage.createBlogPost(validatedData);
+      res.status(201).json(blogPost);
+    } catch (error) {
+      console.error('Create blog post error:', error);
+      res.status(500).json({ message: 'Failed to create blog post' });
     }
   });
 
