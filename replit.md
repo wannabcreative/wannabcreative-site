@@ -90,7 +90,27 @@ Two main entities defined in Drizzle schema:
 - Files served statically via Express middleware
 - Production deployment needs persistent file storage solution
 
-## Recent Changes (2025-07-29)
+## Recent Changes (2025-08-14)
+- **Current Year Update**: Fixed fortune analysis to reflect current year (2025)
+  - Updated new year fortune readings to display 2025 instead of hardcoded 2024
+  - Applied dynamic year calculation using `today.getFullYear()` for accurate predictions
+  - Both Korean and English fortune texts now show correct current year
+
+- **Real-time Blog Management**: Implemented comprehensive blog CRUD functionality
+  - Added "글쓰기" (Write Post) button in blog header with modal interface
+  - Created post creation form with title, summary, category, and content fields
+  - Implemented real-time post publishing with immediate blog refresh
+  - Added delete functionality with trash icon buttons on each post
+  - Server-side DELETE API endpoint for post removal
+  - Success/error toast notifications for all blog operations
+  - Category selection (손금 분석, 사주풀이, 운세 팁) with Korean labels
+
+- **UI Components**: Added missing shadcn/ui components
+  - Created Dialog component for modal interfaces
+  - Added Textarea component for multi-line content input
+  - Proper form validation and error handling throughout
+
+## Previous Changes (2025-07-29)
 - **Multilingual Support**: Added comprehensive i18n system supporting 5 languages (Korean, English, Chinese, Japanese, Spanish)
   - Language context provider with browser auto-detection
   - Language selector dropdown in header
