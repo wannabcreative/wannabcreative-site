@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useLanguageContext } from "@/lib/i18n";
+import { LanguageSelector } from "@/components/ui/language-selector";
 import { 
   Hand, 
   BookOpen,
@@ -25,6 +26,9 @@ export default function Home() {
             <h1 className="text-2xl font-bold bg-gradient-to-r from-mystic-gold to-amber-300 bg-clip-text text-transparent">
               WannaB Creative
             </h1>
+          </div>
+          <div className="flex items-center space-x-4">
+            <LanguageSelector />
           </div>
         </nav>
       </header>

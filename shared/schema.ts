@@ -21,6 +21,9 @@ export const palmReadings = pgTable("palm_readings", {
   healthReading: text("health_reading").notNull(),
   features: jsonb("features").notNull(),
   advice: jsonb("advice").notNull(),
+  todayFortune: text("today_fortune").notNull(),
+  newYearFortune: text("new_year_fortune").notNull(),
+  mbtiPrediction: text("mbti_prediction").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
 });
 

@@ -55,6 +55,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         healthReading: analysisResult.healthReading,
         features: analysisResult.features,
         advice: analysisResult.advice,
+        todayFortune: analysisResult.todayFortune,
+        newYearFortune: analysisResult.newYearFortune,
+        mbtiPrediction: analysisResult.mbtiPrediction,
       });
 
       res.json(palmReading);
@@ -290,6 +293,68 @@ async function analyzePalmImage(imagePath: string, language: string = 'ko', birt
 
   const currentReadings = readings[language as keyof typeof readings] || readings.ko;
 
+  // Generate birthday-based fortunes if birth date is provided
+  let todayFortune = "";
+  let newYearFortune = "";
+  let mbtiPrediction = "";
+
+  if (birthDate) {
+    const birth = new Date(birthDate);
+    const today = new Date();
+    const zodiacSigns = ['쥐', '소', '호랑이', '토끼', '용', '뱀', '말', '양', '원숭이', '닭', '개', '돼지'];
+    const birthYear = birth.getFullYear();
+    const zodiacSign = zodiacSigns[(birthYear - 1900) % 12];
+    
+    const fortuneTemplates = {
+      ko: {
+        today: [
+          `오늘은 ${zodiacSign}띠인 당신에게 특별한 기회가 찾아올 것입니다. 직감을 믿고 행동하세요.`,
+          `${zodiacSign}띠의 운세가 상승 중입니다. 새로운 만남이나 좋은 소식을 기대해보세요.`,
+          `오늘은 조심스럽게 행동하는 것이 좋겠습니다. ${zodiacSign}띠는 신중함이 행운을 가져다 줍니다.`
+        ],
+        newYear: [
+          `2024년 ${zodiacSign}띠는 큰 변화와 성장의 해가 될 것입니다. 새로운 도전을 두려워하지 마세요.`,
+          `올해는 ${zodiacSign}띠에게 재운이 특히 좋은 해입니다. 투자나 사업에 관심을 가져보세요.`,
+          `${zodiacSign}띠의 2024년은 인간관계에서 많은 발전이 있을 것입니다. 소중한 인연을 만나게 됩니다.`
+        ],
+        mbti: [
+          `당신의 손금을 보니 ENFP 성향이 강합니다. 창의적이고 열정적인 에너지가 느껴집니다.`,
+          `ISFJ의 특성이 보입니다. 다른 사람을 배려하는 따뜻한 마음과 책임감이 돋보입니다.`,
+          `INTJ 성향이 나타납니다. 논리적 사고와 체계적인 계획 수립 능력이 뛰어납니다.`,
+          `ESFP의 특징이 강하게 드러납니다. 사교적이고 즐거운 에너지로 주변을 밝게 만듭니다.`
+        ]
+      },
+      en: {
+        today: [
+          `Today brings special opportunities for you as a ${zodiacSign} sign. Trust your instincts and take action.`,
+          `Fortune is rising for the ${zodiacSign} sign. Look forward to new encounters or good news.`,
+          `It would be good to act carefully today. Caution brings luck to the ${zodiacSign} sign.`
+        ],
+        newYear: [
+          `2024 will be a year of great change and growth for the ${zodiacSign} sign. Don't fear new challenges.`,
+          `This year brings especially good financial luck for the ${zodiacSign} sign. Consider investments or business opportunities.`,
+          `2024 will bring many developments in relationships for the ${zodiacSign} sign. You'll meet precious connections.`
+        ],
+        mbti: [
+          `Looking at your palm, I see strong ENFP tendencies. Creative and passionate energy is felt.`,
+          `ISFJ characteristics are visible. Your warm heart and sense of responsibility in caring for others stands out.`,
+          `INTJ tendencies appear. Your logical thinking and systematic planning abilities are excellent.`,
+          `ESFP traits are strongly revealed. You brighten your surroundings with sociable and joyful energy.`
+        ]
+      }
+    };
+
+    const currentTemplates = fortuneTemplates[language as keyof typeof fortuneTemplates] || fortuneTemplates.ko;
+    todayFortune = currentTemplates.today[Math.floor(Math.random() * currentTemplates.today.length)];
+    newYearFortune = currentTemplates.newYear[Math.floor(Math.random() * currentTemplates.newYear.length)];
+    mbtiPrediction = currentTemplates.mbti[Math.floor(Math.random() * currentTemplates.mbti.length)];
+  } else {
+    // Default messages when no birth date is provided
+    todayFortune = language === 'en' ? "Please provide your birth date for personalized daily fortune." : "개인 맞춤 오늘의 운세를 위해 생년월일을 입력해주세요.";
+    newYearFortune = language === 'en' ? "Please provide your birth date for new year fortune reading." : "신년 운세 분석을 위해 생년월일을 입력해주세요.";
+    mbtiPrediction = language === 'en' ? "Please provide your birth date for MBTI prediction." : "MBTI 예측을 위해 생년월일을 입력해주세요.";
+  }
+
   return {
     loveScore,
     moneyScore,
@@ -298,6 +363,9 @@ async function analyzePalmImage(imagePath: string, language: string = 'ko', birt
     moneyReading: currentReadings.money[Math.floor(Math.random() * currentReadings.money.length)],
     healthReading: currentReadings.health[Math.floor(Math.random() * currentReadings.health.length)],
     features: currentReadings.features.slice(0, 3),
-    advice: currentReadings.advice.slice(0, 3)
+    advice: currentReadings.advice.slice(0, 3),
+    todayFortune,
+    newYearFortune,
+    mbtiPrediction
   };
 }

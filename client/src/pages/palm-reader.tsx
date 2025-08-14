@@ -18,8 +18,14 @@ import {
   Lightbulb, 
   ChevronRight,
   RotateCcw,
-  Calendar
+  Calendar,
+  BookOpen,
+  Home,
+  Sun,
+  Sparkles,
+  Brain
 } from "lucide-react";
+import { Link } from "wouter";
 import { type PalmReading } from "@shared/schema";
 
 export default function PalmReader() {
@@ -88,21 +94,30 @@ export default function PalmReader() {
       <header className="relative z-10 p-6">
         <nav className="flex justify-between items-center max-w-6xl mx-auto">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 mystic-gold-gradient rounded-full flex items-center justify-center">
-              <Hand className="text-slate-900 text-lg" />
-            </div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-mystic-gold to-amber-300 bg-clip-text text-transparent">
-              {t.appName}
-            </h1>
+            <Link href="/">
+              <div className="w-10 h-10 mystic-gold-gradient rounded-full flex items-center justify-center cursor-pointer">
+                <Hand className="text-slate-900 text-lg" />
+              </div>
+            </Link>
+            <Link href="/">
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-mystic-gold to-amber-300 bg-clip-text text-transparent cursor-pointer">
+                {t.appName}
+              </h1>
+            </Link>
           </div>
-          <div className="flex items-center space-x-3">
-            <LanguageSelector />
-            <Button 
-              variant="outline" 
-              className="hidden md:block bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20"
-            >
-              {t.freeTrial}
-            </Button>
+          <div className="flex items-center space-x-4">
+            <Link href="/">
+              <Button variant="ghost" className="text-white hover:text-mystic-gold">
+                <Home className="w-4 h-4 mr-2" />
+                홈
+              </Button>
+            </Link>
+            <Link href="/blog">
+              <Button variant="outline" className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20">
+                <BookOpen className="w-4 h-4 mr-2" />
+                블로그
+              </Button>
+            </Link>
           </div>
         </nav>
       </header>
@@ -306,6 +321,54 @@ export default function PalmReader() {
               </Card>
             </div>
 
+            {/* New Fortune Analysis Sections */}
+            <div className="grid md:grid-cols-3 gap-8 mb-8">
+              {/* Today's Fortune */}
+              <Card className="bg-gradient-to-br from-orange-500/20 to-amber-500/20 backdrop-blur-sm border-amber-300/20 hover:transform hover:scale-105 transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="text-center mb-4">
+                    <div className="w-16 h-16 bg-gradient-to-r from-orange-400 to-amber-400 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <Sun className="text-2xl text-white" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-black">오늘의 운세</h3>
+                  </div>
+                  <p className="text-black text-base leading-relaxed text-center">
+                    {results.todayFortune}
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* New Year Fortune */}
+              <Card className="bg-gradient-to-br from-violet-500/20 to-purple-500/20 backdrop-blur-sm border-purple-300/20 hover:transform hover:scale-105 transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="text-center mb-4">
+                    <div className="w-16 h-16 bg-gradient-to-r from-violet-400 to-purple-400 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <Sparkles className="text-2xl text-white" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-black">신년 운세</h3>
+                  </div>
+                  <p className="text-black text-base leading-relaxed text-center">
+                    {results.newYearFortune}
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* MBTI Prediction */}
+              <Card className="bg-gradient-to-br from-indigo-500/20 to-blue-500/20 backdrop-blur-sm border-blue-300/20 hover:transform hover:scale-105 transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="text-center mb-4">
+                    <div className="w-16 h-16 bg-gradient-to-r from-indigo-400 to-blue-400 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <Brain className="text-2xl text-white" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-black">MBTI 예측</h3>
+                  </div>
+                  <p className="text-black text-base leading-relaxed text-center">
+                    {results.mbtiPrediction}
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
             {/* Detailed Analysis */}
             <Card className="bg-white/5 backdrop-blur-sm border-white/10 p-8">
               <h3 className="text-2xl font-semibold text-mystic-gold mb-6 text-center">{t.detailedAnalysis}</h3>
@@ -357,37 +420,19 @@ export default function PalmReader() {
       {/* Footer */}
       <footer className="relative z-10 mt-20 border-t border-white/10 bg-black/20 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-6 py-12">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="md:col-span-2">
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-8 h-8 mystic-gold-gradient rounded-full flex items-center justify-center">
-                  <Hand className="text-slate-900" />
-                </div>
-                <h3 className="text-xl font-bold text-mystic-gold">Palm Reader</h3>
+          <div className="text-center">
+            <div className="flex items-center justify-center space-x-3 mb-4">
+              <div className="w-8 h-8 mystic-gold-gradient rounded-full flex items-center justify-center">
+                <Hand className="text-slate-900" />
               </div>
-              <p className="text-gray-400 mb-4 max-w-md">
-                AI 기술과 전통 손금술의 만남. 정확하고 신뢰할 수 있는 손금 분석 서비스를 제공합니다.
-              </p>
+              <h3 className="text-xl font-bold text-mystic-gold">WannaB Creative</h3>
             </div>
-            <div>
-              <h4 className="font-semibold text-white mb-4">서비스</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-mystic-gold transition-colors">손금 분석</a></li>
-                <li><a href="#" className="hover:text-mystic-gold transition-colors">운세 보기</a></li>
-                <li><a href="#" className="hover:text-mystic-gold transition-colors">프리미엄</a></li>
-              </ul>
+            <p className="text-gray-400 mb-6">
+              AI 기술과 전통 손금술의 만남으로 신비로운 통찰을 제공합니다.
+            </p>
+            <div className="border-t border-white/10 pt-6">
+              <p className="text-gray-400">&copy; 2024 WannaB Creative. Made with mystical insights.</p>
             </div>
-            <div>
-              <h4 className="font-semibold text-white mb-4">지원</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-mystic-gold transition-colors">도움말</a></li>
-                <li><a href="#" className="hover:text-mystic-gold transition-colors">문의하기</a></li>
-                <li><a href="#" className="hover:text-mystic-gold transition-colors">개인정보처리방침</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-white/10 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 Palm Reader. Made with ❤️ for mystical insights.</p>
           </div>
         </div>
       </footer>
